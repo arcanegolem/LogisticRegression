@@ -54,7 +54,7 @@ class LogisticRegerssion:
 
                 self.weight -= gradient * self.learning_rate
 
-                if epoch % 100 == 0: print(f"Итерация № {str(epoch)}; LOSS: {str(float(loss))}")
+                if epoch % 100 == 0: print(f"{str(epoch)}: \n\tLOSS: {str(float(loss))}")
     
 
     def show(self, side_spacing : int, prediction_treshold : float) -> None:
