@@ -94,7 +94,7 @@ class LogisticRegerssion:
         return np.dot(coords.T, (pred - labels)) / labels.size
 
 
-coordinates, labels = blobs(n_labels=300, centers=[[2, 3], [-3, -1]], cluster_std=2, random_state=1520)
+coordinates, labels = blobs(n_samples=300, centers=[[2, 3], [-3, -1]], cluster_std=2, random_state=1520)
 
 LogReg = LogisticRegerssion(max_iter=10000, learning_rate=0.001)
 LogReg.run(coordinates, labels)
