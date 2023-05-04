@@ -30,8 +30,8 @@ class LogisticRegerssion:
         return LogisticRegerssion.sigmoid(self.logit(enhanced_coords, self.weight))
 
 
-    def run(self, coordinates : np.ndarray, samples : np.ndarray) -> None:
-        self.samples_amount    = samples.size
+    def run(self, coordinates : np.ndarray, labels : np.ndarray) -> None:
+        self.labels_amount    = labels.size
         self.graph_coordinates = coordinates
 
         n, k             = coordinates.shape
@@ -41,12 +41,12 @@ class LogisticRegerssion:
         for epoch in range(self.max_iterations):
             order = np.random.permutation(len(self.coordinates))
 
-            for start_index in range(0, len(self.coordinates), self.samples_amount):
+            for start_index in range(0, len(self.coordinates), self.labels_amount):
 
-                batch_indices = order[start_index:start_index + self.samples_amount]
+                batch_indices = order[start_index:start_index + self.labels_amount]
 
                 coords_batch = self.coordinates[batch_indices]
-                labels_batch = samples         [batch_indices]
+                labels_batch = labels         [batch_indices]
 
                 prediction = LogisticRegerssion.sigmoid(self.logit(coords_batch, self.weight))
                 loss       = LogisticRegerssion.BCE(prediction, labels_batch)
@@ -58,7 +58,7 @@ class LogisticRegerssion:
     
 
     def show(self, side_spacing : int, prediction_treshold : float) -> None:
-        colored_labels = np.zeros(self.samples_amount, dtype=str)
+        colored_labels = np.zeros(self.labels_amount, dtype=str)
 
         for i, cl in enumerate([0, 1]): colored_labels[labels == cl] = self.colors[i]
 
@@ -94,7 +94,7 @@ class LogisticRegerssion:
         return np.dot(coords.T, (pred - labels)) / labels.size
 
 
-coordinates, labels = blobs(n_samples=300, centers=[[2, 3], [-3, -1]], cluster_std=2, random_state=1520)
+coordinates, labels = blobs(n_labels=300, centers=[[2, 3], [-3, -1]], cluster_std=2, random_state=1520)
 
 LogReg = LogisticRegerssion(max_iter=10000, learning_rate=0.001)
 LogReg.run(coordinates, labels)
